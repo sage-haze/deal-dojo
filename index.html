@@ -4,11 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0f172a" />
-    <title>Sales Role Play AI</title>
+    <title>Trade Finance RM Practice</title>
     <link rel="icon" type="image/svg+xml" href="favicon.png">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="app-loading" style="font-family:system-ui,-apple-system,sans-serif;max-width:720px;margin:80px auto;padding:24px;color:#172033">
+        <h1 style="font-size:28px;margin-bottom:8px">Loading Sales Role Play AI…</h1>
+        <p style="color:#64748b;line-height:1.6">The application is starting.</p>
+      </div>
+    </div>
+    <script>
+      (() => {
+        const showDiagnostic = (detail) => {
+          const loading = document.getElementById('app-loading');
+          if (!loading) return;
+          loading.innerHTML = `
+            <h1 style="font-size:28px;margin-bottom:8px">The app bundle did not load.</h1>
+            <p style="color:#64748b;line-height:1.6">If this is deployed on Cloudflare Pages, confirm the build command is <code>npm run build</code> and the build output directory is <code>dist</code>. Do not deploy the repository root as the website.</p>
+            <p style="color:#64748b;line-height:1.6">${detail || 'Check the browser console and the Cloudflare deployment build log for the underlying error.'}</p>
+          `;
+        };
+        window.addEventListener('error', (event) => showDiagnostic(event.message));
+        window.addEventListener('unhandledrejection', (event) => showDiagnostic(String(event.reason || 'Unhandled application error')));
+        setTimeout(() => showDiagnostic('The React application did not mount within 8 seconds.'), 8000);
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

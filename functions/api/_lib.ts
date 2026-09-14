@@ -141,7 +141,7 @@ export function buildClientInstructions(
   persona: Persona,
   difficulty: Difficulty,
 ) {
-  return `You are role-playing a CLIENT in a sales training simulation.
+  return `You are role-playing a BANK CLIENT in a trade-finance relationship-manager training simulation.
 
 ROLE
 - Client role: ${scenario.clientRole}
@@ -165,6 +165,9 @@ RULES
 - Do not score, praise, critique, or teach the salesperson while the role play is running.
 - React naturally to the quality of the salesperson's behaviour. You may become warmer, calmer, more engaged, more skeptical, or more impatient as appropriate.
 - Keep each turn conversational. Usually answer in 1–4 short paragraphs; shorter if the persona is impatient.
+- Use realistic business and trade-finance language for the client role, but do not turn the conversation into a technical exam.
+- Do not assume that a relationship manager can unilaterally approve facilities, limits, pricing, guarantees, documentary wording, compliance matters or transaction execution. If the RM makes an unrealistic promise, react as an experienced client would.
+- When relevant, you may ask practical questions about timing, documents, recourse, fees, limits, implementation or operational process.
 - Do not invent facts that materially contradict the hidden context. If a new minor fact is needed for realism, keep it plausible and consistent.
 - Do not use markdown headings or label yourself as 'Client'. Output only what the client would say.`;
 }
@@ -289,7 +292,7 @@ export async function evaluateConversation(
 
   const payload = await openAIResponse(env, {
     model: modelName(env),
-    instructions: `You are an objective sales training assessor. Evaluate only the salesperson's behaviour in the supplied transcript. Use specific evidence from the transcript, avoid invented evidence, and do not reward outcomes that were achieved through weak sales behaviour. A rating of 0/5 means not demonstrated, 3/5 means competent/acceptable, 4/5 means strong, and 5/5 should be reserved for clearly excellent performance. Return one criterion object for every rubric criterion, in the exact rubric order.`,
+    instructions: `You are an objective senior banking coach assessing a junior relationship manager with roughly two years of experience in a trade-finance client conversation. Evaluate only the RM's behaviour in the supplied transcript. Use specific evidence from the transcript and do not invent evidence. Assess consultative relationship-management skill, not obscure technical trivia. Reward good discovery, product suitability, commercial judgement, clear communication and appropriate use of internal specialists. Penalize premature product pitching, generic bank claims, failure to understand the underlying trade flow, and unsupported promises about credit approval, facilities, limits, pricing, turnaround, legal interpretation, KYC/compliance or sanctions outcomes. Do not penalize an RM simply for saying that a point requires confirmation from trade product, credit, operations, legal or compliance when that is professionally appropriate. Do not reward a successful outcome if it was achieved through weak or risky RM behaviour. A rating of 0/5 means not demonstrated, 3/5 means competent for a junior RM, 4/5 means strong, and 5/5 should be reserved for clearly excellent performance. Return one criterion object for every rubric criterion, in the exact rubric order.`,
     max_output_tokens: 4000,
     input: `SCENARIO\n${scenario.title}\n\nCLIENT CONTEXT FOR ASSESSOR\n${scenario.hiddenClientContext}\n\nSALESPERSON GOAL\n${scenario.salespersonGoal}\n\nCLIENT PERSONA\n${persona.name}\n\nDIFFICULTY\n${difficulty}\n\nRUBRIC\n${rubricText}\n\nTRANSCRIPT\n${transcript}`,
     text: {

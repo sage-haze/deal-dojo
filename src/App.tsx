@@ -265,8 +265,8 @@ export default function App() {
         <button className="brand-button" onClick={newRoleplay}>
           <span className="brand-mark">AI</span>
           <span>
-            <strong>Sales Role Play</strong>
-            <small>Training simulator</small>
+            <strong>Trade Finance RM Practice</strong>
+            <small>Client conversation simulator</small>
           </span>
         </button>
         <nav>
@@ -287,10 +287,10 @@ export default function App() {
         {view === 'home' && (
           <section className="page-grid">
             <div className="hero panel">
-              <p className="eyebrow">AI CLIENT SIMULATION</p>
-              <h1>Practice the conversation before it matters.</h1>
+              <p className="eyebrow">TRADE FINANCE CLIENT SIMULATION</p>
+              <h1>Practice trade-finance conversations before they matter.</h1>
               <p className="hero-copy">
-                Choose a selling situation and client personality. The AI stays in character, then assesses the completed conversation against a weighted rubric.
+                Choose a client situation and personality. The AI stays in character as a corporate banking client, then assesses the RM against a trade-finance relationship-management rubric.
               </p>
               <div className="feature-row">
                 <span>✓ Persistent transcript</span>
@@ -309,7 +309,7 @@ export default function App() {
               </div>
 
               <label className="field">
-                <span>Salesperson name <em>optional</em></span>
+                <span>Relationship manager name <em>optional</em></span>
                 <input
                   value={salespersonName}
                   onChange={(event) => setSalespersonName(event.target.value)}
@@ -420,7 +420,7 @@ export default function App() {
               >
                 {busy ? 'Working…' : 'End & assess role play'}
               </button>
-              <small className="muted">Assessment becomes available after two salesperson turns. You can resume the session after assessment.</small>
+              <small className="muted">Assessment becomes available after two RM turns. You can resume the session after assessment.</small>
             </aside>
 
             <div className="panel chat-panel">
@@ -435,12 +435,12 @@ export default function App() {
                   <div className="empty-chat">
                     <span className="persona-emoji big">{persona.emoji}</span>
                     <h3>You have the floor.</h3>
-                    <p>Open the sales conversation. The AI client will respond in character using the hidden scenario context.</p>
+                    <p>Open the client conversation. The AI will respond in character using the hidden trade-finance scenario context.</p>
                   </div>
                 )}
                 {conversation.messages.map((message) => (
                   <div key={`${message.seq}-${message.role}`} className={`message-row ${message.role}`}>
-                    <div className="message-meta">{message.role === 'user' ? 'You' : scenario.clientRole}</div>
+                    <div className="message-meta">{message.role === 'user' ? 'You (RM)' : scenario.clientRole}</div>
                     <div className="message-bubble">{message.content}</div>
                   </div>
                 ))}
